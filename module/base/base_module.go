@@ -47,7 +47,7 @@ type BaseModule struct {
 // Deprecated: 因为命名规范问题函数将废弃,请用GetServerID代替
 func (m *BaseModule) GetServerId() string {
 	//很关键,需要与配置文件中的Module配置对应
-	if m.service!=nil&&m.service.Server()!=nil{
+	if m.service != nil && m.service.Server() != nil {
 		return m.service.Server().ID()
 	}
 	return "no server"
@@ -56,7 +56,7 @@ func (m *BaseModule) GetServerId() string {
 // GetServerID 节点ID
 func (m *BaseModule) GetServerID() string {
 	//很关键,需要与配置文件中的Module配置对应
-	if m.service!=nil&&m.service.Server()!=nil{
+	if m.service != nil && m.service.Server() != nil {
 		return m.service.Server().ID()
 	}
 	return "no server"
@@ -119,7 +119,7 @@ func (m *BaseModule) OnInit(subclass module.RPCModule, app module.App, settings 
 	}
 
 	if len(opts.ID) == 0 {
-		opt = append(opt, server.Id(mqanttools.GenerateID().String()))
+		opt = append(opt, server.ID(mqanttools.GenerateID().String()))
 	}
 
 	if len(opts.Version) == 0 {

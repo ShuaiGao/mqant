@@ -225,8 +225,8 @@ func (age *agent) toResult(a *agent, Topic string, Result interface{}, Error str
 }
 
 func (age *agent) recoverworker(pack *mqtt.Pack) {
-	defer age.Finish()
 	defer func() {
+		age.Finish()
 		if r := recover(); r != nil {
 			buff := make([]byte, 1024)
 			runtime.Stack(buff, false)
@@ -305,7 +305,7 @@ func (age *agent) recoverworker(pack *mqtt.Pack) {
 					return
 				}
 				args[0] = b
-				ctx, _ := context.WithTimeout(context.TODO(), time.Second*3)
+				ctx, _ := context.WithTimeout(context.TODO(), age.module.GetApp().Options().RPCExpired)
 				result, e := serverSession.CallArgs(ctx, topics[1], ArgsType, args)
 				toResult(age, *pub.GetTopic(), result, e)
 			} else {

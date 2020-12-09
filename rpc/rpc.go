@@ -24,18 +24,20 @@ import (
 // FunctionInfo handler接口信息
 type FunctionInfo struct {
 	Function  reflect.Value
+	FuncType  reflect.Type
+	InType    []reflect.Type
 	Goroutine bool
 }
 
 //MQServer 代理者
 type MQServer interface {
-	Callback(callinfo CallInfo) error
+	Callback(callinfo *CallInfo) error
 }
 
 //CallInfo RPC的请求信息
 type CallInfo struct {
-	RPCInfo  rpcpb.RPCInfo
-	Result   rpcpb.ResultInfo
+	RPCInfo  *rpcpb.RPCInfo
+	Result   *rpcpb.ResultInfo
 	Props    map[string]interface{}
 	ExecTime int64
 	Agent    MQServer //代理者  AMQPServer / LocalServer 都继承 Callback(callinfo CallInfo)(error) 方法
